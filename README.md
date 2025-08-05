@@ -1,3 +1,40 @@
+## Быстрый старт
+
+### Запуск проекта
+
+1. **Клонирование репозитория:**
+   ```bash
+   git clone git@github.com:wladbelsky/generic_data_api.git
+   cd generic_data_processor
+   ```
+
+2. **Запуск с помощью Docker Compose:**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Проверка работы API:**
+  - Откройте браузер и перейдите по адресу: http://localhost:8921/docs
+  - Или выполните тестовый запрос:
+   ```bash
+   curl -X POST "http://localhost:8921/process_data" \
+        -H "Content-Type: application/json" \
+        -d '{"test": "data", "user": "example"}'
+   ```
+
+### Настройка окружения
+
+- **CLICKHOUSE_URL** - URL подключения к ClickHouse (по умолчанию: `clickhouse+native://default:@clickhouse:9000`)
+- **LOGGING_ENABLED** - включение/выключение логирования (по умолчанию: `true`)
+
+### Порты
+
+- **API сервис**: http://localhost:8921
+- **ClickHouse HTTP**: http://localhost:8123
+- **ClickHouse Native**: localhost:9000
+
+---
+
 ## Техническое задание
 ### Название проекта
 Асинхронный REST API-сервис обработки данных на FastAPI
@@ -42,4 +79,3 @@ POST /process_data/Принимает JSON с произвольной стру�
   "length": 42
 }
 ```
-
