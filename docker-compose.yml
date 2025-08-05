@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    image: ghcr.io/wladbelsky/generic_data_api/master:master
+    ports:
+      - "8921:8000"
+    environment:
+      - CLICKHOUSE_URL=clickhouse+native://default:@clickhouse:9000
+      - LOGGING_ENABLED=true
+    depends_on:
+      - clickhouse
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:23.8
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      CLICKHOUSE_DB: logs
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+
+volumes:
+  clickhouse_data:
