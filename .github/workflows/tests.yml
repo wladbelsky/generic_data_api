@@ -51,17 +51,3 @@ jobs:
           pytest tests/ -v --tb=short --junit-xml=test-results.xml
         env:
           PYTHONPATH: ${{ github.workspace }}
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results-${{ matrix.python-version }}
-          path: test-results.xml
-
-      - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: test-results.xml
-          check_name: "Test Results (Python ${{ matrix.python-version }})"
