@@ -76,12 +76,12 @@ class TestLoggingService:
         session.commit.side_effect = Exception("Database error")
         service = LoggingService(db, enabled=True)
 
-        log_id = await service.log_request(
-            endpoint="/test",
-            input_data={"test": "data"}
-        )
+        with pytest.raises(Exception, match="Database error"):
+            await service.log_request(
+                endpoint="/test",
+                input_data={"test": "data"}
+            )
 
-        assert log_id is not None
         session.add.assert_called_once()
 
     @pytest.mark.asyncio

@@ -30,20 +30,17 @@ class LoggingService:
             return None
 
         log_id = str(uuid.uuid4())
-        try:
-            with self.db.get_db() as db:
-                log_entry = RequestLog(
-                    id=log_id,
-                    endpoint=endpoint,
-                    input_data=json.dumps(input_data),
-                    output_data=json.dumps(output_data) if output_data else None,
-                    status=status,
-                    error_message=error_message
-                )
-                db.add(log_entry)
-                db.commit()
-        except Exception as e:
-            print(f"Failed to log request: {e}")
+        with self.db.get_db() as db:
+            log_entry = RequestLog(
+                id=log_id,
+                endpoint=endpoint,
+                input_data=json.dumps(input_data),
+                output_data=json.dumps(output_data) if output_data else None,
+                status=status,
+                error_message=error_message
+            )
+            db.add(log_entry)
+            db.commit()
 
         return log_id
 
